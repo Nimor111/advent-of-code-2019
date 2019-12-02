@@ -2,12 +2,13 @@ module SecondDay where
 
 import           Data.List       (elemIndex)
 import           Data.List.Split (splitOn)
+import System.Random (randomRIO)
 
 solve :: [Int] -> [Int]
 solve xs = go xs 0
     where
-      go :: [Int] -> Int -> [Int]
-      go ls idx
+        go :: [Int] -> Int -> [Int]
+        go ls idx
              | first == 99 = ls
              | first == 1 =
                  go (left ++ [second + third] ++ right) (idx + 4)
@@ -23,6 +24,21 @@ solve xs = go xs 0
 
 parseInput :: String -> [Int]
 parseInput = fmap (\x -> read x :: Int) . splitOn "," . filter (/= '\n')
+
+checkOutput :: [Int] -> IO Int
+checkOutput xs = do
+    pair <- genPair
+    if (head (solved pair)) == 19690720
+       then pure $ 100 * (fst pair) + (snd pair)
+       else checkOutput xs
+    where
+        solved pair = solve $ [head xs] ++ [fst pair, snd pair] ++ drop 3 xs
+
+genPair :: IO (Int, Int)
+genPair = do
+    x <- randomRIO (1, 100)
+    y <- randomRIO (1, 100)
+    pure (x, y)
 
 main :: IO ()
 main = do
