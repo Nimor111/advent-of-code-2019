@@ -2,7 +2,7 @@ module SecondDay where
 
 import           Data.List       (elemIndex)
 import           Data.List.Split (splitOn)
-import System.Random (randomRIO)
+import           System.Random   (randomRIO)
 
 solve :: [Int] -> [Int]
 solve xs = go xs 0
