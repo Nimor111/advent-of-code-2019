@@ -6,6 +6,8 @@ let
   haskellDeps = ps: with ps; [
     split
     random
+    attoparsec
+    bytestring
   ];
 
   ghc = haskellPackages.ghcWithPackages haskellDeps;
